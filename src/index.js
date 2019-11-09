@@ -20,10 +20,10 @@ function* rootSaga() {
 // List of saga functions
 function* firstSaga(action) {
     try {
-        const moviesResponse = yield axios.get('/');
+        const moviesResponse = yield axios.get('/movies');
         yield put({ type: 'SET_MOVIES', payload: moviesResponse.data });
     } catch (error) {
-        console.log('error fetching elements', error);
+        console.log('error fetching movies', error);
 
     }
 }

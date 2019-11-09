@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 
   pool.query(query)
     .then((response) => {
-      console.log('SELECT ALL favorites response', response);
+      console.log('SELECT ALL movies response', response);
       res.send(response.rows)
     })
     .catch((error) => {

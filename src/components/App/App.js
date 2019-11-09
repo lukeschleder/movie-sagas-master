@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
+import MovieList from '../MovieList/MovieList'
 
 class App extends Component {
 
@@ -16,8 +17,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <p>Empty Page</p>
-        <pre>{JSON.stringify(this.props.reduxState)}</pre>
+        <p>Movies</p>
+        <MovieList/>
+        <pre>{JSON.stringify(this.props.reduxState.movies)}</pre>
       </div>
     );
   }
