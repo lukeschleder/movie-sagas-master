@@ -15,6 +15,8 @@ import axios from 'axios';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('GET_MOVIES', firstSaga);
+    yield takeEvery('GET_GENRES', secondSaga);
+    yield takeEvery('EDIT_MOVIE', thirdSaga);
 }
 
 // List of saga functions
@@ -25,6 +27,40 @@ function* firstSaga(action) {
     } catch (error) {
         console.log('error fetching movies', error);
 
+    }
+}
+
+function* secondSaga(action) {
+    console.log(action.payload);
+    try {
+        const genreResponse = yield axios.get(`movies/details/${action.payload}`);
+        console.log(genreResponse);
+        
+        yield put({ type: 'SET_GENRES', payload: genreResponse.data });
+    } catch (error) {
+        console.log('error fetching genres', error);
+    }
+}
+
+function* thirdSaga(action) {
+    console.log(action.payload);
+    
+    try {
+        yield axios.put(`movies/edit/${action.payload}`);
+        yield put ({type: 'GET_MOVIES'})
+    }
+    catch (error) {
+        console.log('error modifying title and description', error);
+        
+    }
+}
+
+function* putFavSaga(action) {
+    try {
+        yield axios.put(`/api/favorite/${action.payload.id}`);
+        yield put({ type: 'GET_FAVORITES' });
+    } catch (error) {
+        console.log('error modifying favorite');
     }
 }
 

@@ -20,6 +20,26 @@ router.get('/', (req, res) => {
     })
 });
 
+router.get('/details/:id', (req, res) => {
+
+  // SQL Query to return all movies
+  const query = `SELECT *
+          FROM "movies"
+          JOIN "movies_genres" ON "movies"."id"="movies_genres"."movie_id"
+          JOIN "genres" ON "genres"."id"="movies_genres"."genre_id"
+          WHERE "movies"."id" =$1;`;
+
+  pool.query(query, [req.params.id])
+    .then((response) => {
+      console.log('SELECT ALL genres response', response);
+      res.send(response.rows)
+    })
+    .catch((error) => {
+      console.log('SELECT ALL favorites error', error);
+      res.sendStatus(500);
+    })
+});
+
 // add a new favorite 
 router.post('/', (req, res) => {
   const newFav = req.body;
