@@ -7,19 +7,18 @@ import { HashRouter as Router, Route, Link, withRouter } from 'react-router-dom'
 class Edit extends Component {
 
     state = {
-            id: this.props.reduxState.movies.id,
-            title: '',
-            description: '',
+        title: '',
+        description: '',
     }
 
     inputDescription = (event) => {
         this.setState({
             ...this.state,
-            description: event.target.value
+            description: event.target.value,
         });
     }
 
-    
+
 
     inputTitle = (event) => {
         this.setState({
@@ -28,11 +27,11 @@ class Edit extends Component {
         });
     }
 
-    changeTitleAndDescription (state) {
-        console.log('in changeTitleAndDescription', state);
-        this.props.dispatch({type: 'EDIT_MOVIE', payload: state})
+    changeTitleAndDescription(movie, state) {
+        console.log('in changeTitleAndDescription', movie.movie_id);
+        this.props.dispatch({ type: 'EDIT_MOVIE', payload:{id:movie.movie_id,...this.state}})
         this.props.history.push('/details')
-        
+
     }
 
 
@@ -45,15 +44,38 @@ class Edit extends Component {
     render() {
         return (
 
-                <>
-                <Button onClick={()=>(this.goBackToDetails())} size="small" color="primary">
+            <Grid
+                container
+                wrap='wrap'
+                alignContent='space-around'
+                justify='center'
+            >
+                {this.props.reduxState.genres.map((movie) => (
+                    <Card key={movie.id}style={{maxWidth: 400}}>
+                    <CardActionArea>
+                      <CardMedia
+                        onClick={this.goToDetails}
+                        title={movie.title}
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                         {movie.title}
+                        </Typography>
+                        <Typography gutterBottom variant="h7" component="h2">
+                         Genre: {movie.name}
+                        </Typography>
+                        
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                    <Button onClick={() => (this.goBackToDetails())} size="small" color="primary">
                     Cancel
                       </Button>
-                <Button onClick={()=>(this.changeTitleAndDescription(this.state))} size="small" color="primary">
+                <Button onClick={() => (this.changeTitleAndDescription(movie, this.state))} size="small" color="primary">
                     Save
                       </Button>
-                <TextField
-                onChange={this.inputTitle}
+                      <TextField
+                    onChange={this.inputTitle}
                     id="standard-basic"
                     label="Title"
                     margin="normal"
@@ -69,9 +91,14 @@ class Edit extends Component {
                     variant="outlined"
                     placeholder="Describe this movie"
                 />
-                <pre>{JSON.stringify( this.state, null, 2)}</pre>
-                </>
+                    </CardActions>
+                  </Card>
+                ))}
+                <pre>{JSON.stringify(this.state, null, 2)}</pre>
+            </Grid>
+                
             
+
         )
     }
 }

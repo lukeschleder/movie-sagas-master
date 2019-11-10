@@ -46,21 +46,14 @@ function* thirdSaga(action) {
     console.log(action.payload);
     
     try {
-        yield axios.put(`movies/edit/${action.payload}`);
-        yield put ({type: 'GET_MOVIES'})
+        const updatedMovies = yield axios.put(`movies/edit/${action.payload.id}`,{title:action.payload.title, description:action.payload.description});
+        console.log(updatedMovies);
+        
+        // yield put ({type: 'GET_MOVIES'})
     }
     catch (error) {
         console.log('error modifying title and description', error);
         
-    }
-}
-
-function* putFavSaga(action) {
-    try {
-        yield axios.put(`/api/favorite/${action.payload.id}`);
-        yield put({ type: 'GET_FAVORITES' });
-    } catch (error) {
-        console.log('error modifying favorite');
     }
 }
 
