@@ -40,19 +40,25 @@ router.get('/details/:id', (req, res) => {
     })
 });
 
-// update given favorite with a category id
-router.put('/edit/:Id', (req, res) => {
+// update given movie with new title and description
+router.put('/edit/:id', (req, res) => {
   console.log(req.body);
   console.log(req.params);
-  
   const updatedMovie = req.body;
+  const queryText = `UPDATE movies
+  SET 
+  title = $1,
+  description = $2
+  WHERE "id" = $3;`;
 
+  const queryValues = [
+    updatedMovie.title,
+    updatedMovie.description,
+    req.params.id,
+  ];
   // req.body should contain a category_id to add to this favorite image
-
   // SQL Query to modify the catergories table with $1 = favID
-  const query = '';
-
-  pool.query(query, [req.params.Id])
+  pool.query(queryText, queryValues)
     .then((response) => {
       console.log('favorites category PUT response', response);
       res.sendStatus(200);
