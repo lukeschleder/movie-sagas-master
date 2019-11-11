@@ -28,6 +28,7 @@ class Details extends Component {
                 alignContent='space-around'
                 justify='center'
             >
+                
                 {this.props.reduxState.genres.map((movie) => (
                     <Card key={movie.id}style={{maxWidth: 400}}>
                     <CardActionArea>

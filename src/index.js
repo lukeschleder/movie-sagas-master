@@ -48,8 +48,7 @@ function* thirdSaga(action) {
     try {
         const updatedMovies = yield axios.put(`movies/edit/${action.payload.id}`,{title:action.payload.title, description:action.payload.description});
         console.log(updatedMovies);
-        
-        yield put ({type: 'GET_MOVIES'})
+        yield put ({type: 'GET_GENRES'})
     }
     catch (error) {
         console.log('error modifying title and description', error);

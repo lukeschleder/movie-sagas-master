@@ -30,6 +30,8 @@ class Edit extends Component {
     changeTitleAndDescription(movie, state) {
         console.log('in changeTitleAndDescription', movie.movie_id);
         this.props.dispatch({ type: 'EDIT_MOVIE', payload:{id:movie.movie_id,...this.state}})
+        // this.props.dispatch({type: 'GET_MOVIES'})
+        this.props.dispatch({type: 'GET_GENRES', payload: movie.movie_id })
         this.props.history.push('/details')
 
     }
