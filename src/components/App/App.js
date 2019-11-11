@@ -25,8 +25,8 @@ class App extends Component {
           <Route exact path="/" exact component={MovieList} />
           <Switch><Route exact path="/details" exact component={Details} /></Switch>
           <Route exact path="/edit" exact component={Edit} />
-          {/* <pre>{JSON.stringify(this.props.reduxState.movies)}</pre> */}
-          {/* <pre>{JSON.stringify(this.props.reduxState.genres)}</pre> */}
+          <pre>{JSON.stringify(this.props.reduxState.movies)}</pre>
+          <pre>{JSON.stringify(this.props.reduxState.genres)}</pre>
         </div>
       </Router>
     );

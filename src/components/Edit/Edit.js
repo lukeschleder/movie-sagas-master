@@ -49,42 +49,50 @@ class Edit extends Component {
 
             <Grid
                 container
+                spacing = {3}
                 wrap='wrap'
                 alignContent='space-around'
                 justify='center'
             >
                 {this.props.reduxState.genres.map((movie) => (
-                    <Card key={movie.id} style={{ maxWidth: 600 }}>
-                        <CardActions>
-
+                    <Grid 
+                    item
+                    sm={4}
+                    key={movie.id}>
+                    <Card  style={{ maxWidth: 600 }}>
+                        <CardContent>
+                            <div>
                             <TextField
                                 onChange={this.inputTitle}
                                 id="standard-basic"
+                                defaultValue={movie.title}
                                 label="Edit Movie Title"
                                 margin="normal"
                                 fullWidth
-                            />
+                            /></div>
+                            <div>
                             <TextField
                                 onChange={this.inputDescription}
                                 label="Edit Movie Description"
+                                defaultValue={movie.description}
                                 multiline
-                                rows="8"
+                                rows="15"
                                 fullWidth
-                                defaultValue=""
                                 margin="normal"
                                 variant="outlined"
                                 placeholder="Describe this movie"
-                            />
-                            <Button onClick={() => (this.goBackToDetails())} size="small" color="primary">
+                            /></div>
+                            <div><Button onClick={() => (this.goBackToDetails())} size="small" color="primary">
                                 Cancel
-                      </Button>
-                            <Button onClick={() => (this.changeTitleAndDescription(movie, this.state))} size="small" color="primary">
+                      </Button></div>
+                            <div><Button onClick={() => (this.changeTitleAndDescription(movie, this.state))} size="small" color="primary">
                                 Save
-                      </Button>
-                        </CardActions>
+                      </Button></div>
+                        </CardContent>
                     </Card>
+                    </Grid>
                 ))}
-                {/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
+                {/* <pre>{JSON.stringify(this.props.reduxState, null, 2)}</pre> */}
             </Grid>
 
 
