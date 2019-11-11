@@ -21,12 +21,12 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
-        <h2>Movies</h2>
+        <h1 className="appName">Friendly Flicks</h1>
         <Route exact path="/" exact component={MovieList} />
         <Switch><Route exact path="/details" exact component={Details} /></Switch>
         <Route exact path="/edit" exact component={Edit} />
-        <pre>{JSON.stringify(this.props.reduxState.movies)}</pre>
-        <pre>{JSON.stringify(this.props.reduxState.genres)}</pre>
+        {/* <pre>{JSON.stringify(this.props.reduxState.movies)}</pre> */}
+        {/* <pre>{JSON.stringify(this.props.reduxState.genres)}</pre> */}
       </div>
       </Router>
     );

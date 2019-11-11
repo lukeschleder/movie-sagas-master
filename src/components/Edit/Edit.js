@@ -10,7 +10,7 @@ class Edit extends Component {
         title: '',
         description: '',
     }
-
+    // sets description in local state
     inputDescription = (event) => {
         this.setState({
             ...this.state,
@@ -19,24 +19,23 @@ class Edit extends Component {
     }
 
 
-
+    // sets title in local state
     inputTitle = (event) => {
         this.setState({
             ...this.state,
             title: event.target.value
         });
     }
-
+    // changes movies database and then refreshes genres reduxer with new information 
+    // and takes you back to details page
     changeTitleAndDescription(movie, state) {
         console.log('in changeTitleAndDescription', movie.movie_id);
-        this.props.dispatch({ type: 'EDIT_MOVIE', payload:{id:movie.movie_id,...this.state}})
-        // this.props.dispatch({type: 'GET_MOVIES'})
-        this.props.dispatch({type: 'GET_GENRES', payload: movie.movie_id })
+        this.props.dispatch({ type: 'EDIT_MOVIE', payload: { id: movie.movie_id, ...this.state } })
         this.props.history.push('/details')
 
     }
 
-
+    // takes you back to details page when cancel is clicked
     goBackToDetails() {
         console.log('in goBackToDetails');
         this.props.history.push('/details')
@@ -53,53 +52,40 @@ class Edit extends Component {
                 justify='center'
             >
                 {this.props.reduxState.genres.map((movie) => (
-                    <Card key={movie.id}style={{maxWidth: 400}}>
-                    <CardActionArea>
-                      <CardMedia
-                        onClick={this.goToDetails}
-                        title={movie.title}
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                         {movie.title}
-                        </Typography>
-                        <Typography gutterBottom variant="h7" component="h2">
-                         Genre: {movie.name}
-                        </Typography>
-                        
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                    <Button onClick={() => (this.goBackToDetails())} size="small" color="primary">
-                    Cancel
+                    <Card key={movie.id} style={{ maxWidth: 600 }}>
+                        <CardActions>
+
+                            <TextField
+                                onChange={this.inputTitle}
+                                id="standard-basic"
+                                label="Edit Movie Title"
+                                margin="normal"
+                                fullWidth
+                            />
+                            <TextField
+                                onChange={this.inputDescription}
+                                label="Edit Movie Description"
+                                multiline
+                                rows="8"
+                                fullWidth
+                                defaultValue=""
+                                margin="normal"
+                                variant="outlined"
+                                placeholder="Describe this movie"
+                            />
+                            <Button onClick={() => (this.goBackToDetails())} size="small" color="primary">
+                                Cancel
                       </Button>
-                <Button onClick={() => (this.changeTitleAndDescription(movie, this.state))} size="small" color="primary">
-                    Save
+                            <Button onClick={() => (this.changeTitleAndDescription(movie, this.state))} size="small" color="primary">
+                                Save
                       </Button>
-                      <TextField
-                    onChange={this.inputTitle}
-                    id="standard-basic"
-                    label="Title"
-                    margin="normal"
-                />
-                <TextField
-                    onChange={this.inputDescription}
-                    label="Description"
-                    multiline
-                    rows="8"
-                    fullWidth
-                    defaultValue=""
-                    margin="normal"
-                    variant="outlined"
-                    placeholder="Describe this movie"
-                />
-                    </CardActions>
-                  </Card>
+                        </CardActions>
+                    </Card>
                 ))}
-                <pre>{JSON.stringify(this.state, null, 2)}</pre>
+                {/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
             </Grid>
-                
-            
+
+
 
         )
     }
