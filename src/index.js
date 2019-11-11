@@ -20,6 +20,7 @@ function* rootSaga() {
 }
 
 // List of saga functions
+// gets movies
 function* firstSaga(action) {
     try {
         const moviesResponse = yield axios.get('/movies');
@@ -29,31 +30,31 @@ function* firstSaga(action) {
 
     }
 }
-
+// gets genres with single movie info
 function* secondSaga(action) {
     console.log(action.payload);
     try {
         const genreResponse = yield axios.get(`movies/details/${action.payload}`);
         console.log(genreResponse);
-        
+
         yield put({ type: 'SET_GENRES', payload: genreResponse.data });
     } catch (error) {
         console.log('error fetching genres', error);
     }
 }
-
+// updates movie with new title and description
 function* thirdSaga(action) {
     console.log(action.payload);
-    
+
     try {
-        const updatedMovies = yield axios.put(`movies/edit/${action.payload.id}`,{title:action.payload.title, description:action.payload.description});
+        const updatedMovies = yield axios.put(`movies/edit/${action.payload.id}`, { title: action.payload.title, description: action.payload.description });
         console.log(updatedMovies);
-        yield put ({type: 'GET_GENRES', payload: action.payload.id})
-        yield put ({type: 'GET_MOVIES'})
+        yield put({ type: 'GET_GENRES', payload: action.payload.id })
+        yield put({ type: 'GET_MOVIES' })
     }
     catch (error) {
         console.log('error modifying title and description', error);
-        
+
     }
 }
 
