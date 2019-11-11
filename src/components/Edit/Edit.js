@@ -29,8 +29,10 @@ class Edit extends Component {
     // changes movies database and then refreshes genres reduxer with new information 
     // and takes you back to details page
     changeTitleAndDescription(movie, state) {
+        if ( state.title === '' || state.description === ''){
+            alert("Please edit completely")
         console.log('in changeTitleAndDescription', movie.movie_id);
-        this.props.dispatch({ type: 'EDIT_MOVIE', payload: { id: movie.movie_id, ...this.state } })
+        } else this.props.dispatch({ type: 'EDIT_MOVIE', payload: { id: movie.movie_id, ...this.state } })
         this.props.history.push('/details')
 
     }
